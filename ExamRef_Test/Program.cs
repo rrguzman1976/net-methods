@@ -52,7 +52,7 @@ using ExamRef.ExamLib.Encryption;
 using ExamRef.ExamLib.Hashing;
 using ExamRef.ExamLib.Certificates;
 using ExamRef.ExamLib.Security.CodeAccess;
-using ExamRef.ExamLib.Debug;
+//using ExamRef.ExamLib.Debug;
 using ExamRef.ExamLib.IO.Files;
 using ExamRef.ExamLib.IO.Streams;
 using ExamRef.ExamLib.IO.Db;
@@ -73,11 +73,26 @@ namespace ExamRef_Test
         {
             var v = new MyBinaryFormatter();
 
-            v.UnitTest();
+            Ex6_ChainZip();
 
             Console.ReadKey();
         }
 
+        public static void Ex6_ChainZip() // chain streams
+        {
+            string folder = @"C:\Users\ricardogu\Desktop\POC_PEPM\Restart_SO";
+            string sohFilePath = Path.Combine(folder, "SOH_Upload_Azure.xml");
+            string manifestFilePath = Path.Combine(folder, "Manifest.xml");
+            string headerFilePath = Path.Combine(folder, "PackageHeader.xml");
+            string zipFilePath = Path.Combine(folder, "SOH_Upload_Azure.zip");
+
+            using (ZipArchive archive = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
+            {
+                archive.CreateEntryFromFile(sohFilePath, Path.GetFileName(sohFilePath));
+                archive.CreateEntryFromFile(manifestFilePath, Path.GetFileName(manifestFilePath));
+                archive.CreateEntryFromFile(headerFilePath, Path.GetFileName(headerFilePath));
+            }
+        }
     }
 }
     
