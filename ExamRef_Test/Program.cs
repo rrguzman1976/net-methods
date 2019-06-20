@@ -71,27 +71,18 @@ namespace ExamRef_Test
 
         public static void Main(string[] args)
         {
-            var v = new MyBinaryFormatter();
+            decimal groundElevation = 0;
+            string inputString = "5,032.3";
 
-            Ex6_ChainZip();
-
-            Console.ReadKey();
-        }
-
-        public static void Ex6_ChainZip() // chain streams
-        {
-            string folder = @"C:\Users\ricardogu\Desktop\POC_PEPM\Restart_SO";
-            string sohFilePath = Path.Combine(folder, "SOH_Upload_Azure.xml");
-            string manifestFilePath = Path.Combine(folder, "Manifest.xml");
-            string headerFilePath = Path.Combine(folder, "PackageHeader.xml");
-            string zipFilePath = Path.Combine(folder, "SOH_Upload_Azure.zip");
-
-            using (ZipArchive archive = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
+            if (decimal.TryParse(inputString, out groundElevation))
             {
-                archive.CreateEntryFromFile(sohFilePath, Path.GetFileName(sohFilePath));
-                archive.CreateEntryFromFile(manifestFilePath, Path.GetFileName(manifestFilePath));
-                archive.CreateEntryFromFile(headerFilePath, Path.GetFileName(headerFilePath));
+                Console.WriteLine("Converted: {0} => {1}", inputString, groundElevation);
             }
+            else
+            {
+                Console.WriteLine("Convert fail: {0} => {1}", inputString, groundElevation);
+            }
+            Console.ReadKey();
         }
     }
 }
